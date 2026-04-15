@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Add Exam Timetable Entry</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="course" class="form-label">Course *</label>
+                            <select class="form-control" id="course" name="course" required>
+                                <option value="">Select Course</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Information Technology">Information Technology</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Mechanical">Mechanical</option>
+                                <option value="Civil">Civil</option>
+                                <option value="Electrical">Electrical</option>
+                                <option value="Chemical">Chemical</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="semester" class="form-label">Semester *</label>
+                            <select class="form-control" id="semester" name="semester" required>
+                                <option value="">Select Semester</option>
+                                <option value="1">Semester 1</option>
+                                <option value="2">Semester 2</option>
+                                <option value="3">Semester 3</option>
+                                <option value="4">Semester 4</option>
+                                <option value="5">Semester 5</option>
+                                <option value="6">Semester 6</option>
+                                <option value="7">Semester 7</option>
+                                <option value="8">Semester 8</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject Name *</label>
+                        <input type="text" class="form-control" id="subject" name="subject" placeholder="e.g., Data Structures, Database Systems" required>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="exam_date" class="form-label">Exam Date *</label>
+                            <input type="date" class="form-control" id="exam_date" name="exam_date" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="exam_time" class="form-label">Exam Time *</label>
+                            <input type="text" class="form-control" id="exam_time" name="exam_time" placeholder="e.g., 10:00 AM - 01:00 PM" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="venue" class="form-label">Venue/Room *</label>
+                        <input type="text" class="form-control" id="venue" name="venue" placeholder="e.g., Hall A, Room 101, Online" required>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <strong>Note:</strong> Students will only see exam timetables that match their enrolled course and semester.
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Add Exam Entry</button>
+                        <a href="{{ url_for('manage_timetables') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

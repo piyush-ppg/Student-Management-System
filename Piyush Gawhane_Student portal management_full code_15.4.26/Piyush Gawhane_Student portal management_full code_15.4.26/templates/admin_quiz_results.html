@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h3 class="text-center">🏆 Quiz Results Management - Declare Winners 🏆</h3>
+    </div>
+    <div class="card-body">
+        <!-- Filter Section -->
+        <div class="alert alert-info">
+            <strong>Note:</strong> Select a student from below and click "Declare Winner" to announce them as a winner.
+        </div>
+        
+        <form method="GET" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="course">Filter by Course</label>
+                    <select name="course" id="course" class="form-control">
+                        <option value="">All Courses</option>
+                        {% for course in courses %}
+                        <option value="{{ course.course }}" {% if course_filter == course.course %}selected{% endif %}>
+                            {{ course.course }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="semester">Filter by Semester</label>
+                    <select name="semester" id="semester" class="form-control">
+                        <option value="">All Semesters</option>
+                        {% for sem in semesters %}
+                        <option value="{{ sem.semester }}" {% if semester_filter == sem.semester|string %}selected{% endif %}>
+                            Semester {{ sem.semester }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="btn btn-primary form-control">Apply Filter</button>
+                </div>
+            </div>
+        </form>
+        
+        {% if results and results|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Roll Number</th>
+                        <th>Course</th>
+                        <th>Sem</th>
+                        <th>Score</th>
+                        <th>Percentage</th>
+                        <th>Completed On</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr {% if result.percentage >= 80 %}class="table-success" 
+                        {% elif result.percentage >= 60 %}class="table-info"
+                        {% endif %}>
+                        <td><strong>{{ result.student_name }}</strong></td>
+                        <td>{{ result.roll_number }}</td>
+                        <td>{{ result.course }}</td>
+                        <td>{{ result.semester }}</td>
+                        <td>{{ result.score }}/{{ result.total_questions }}</td>
+                        <td>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar progress-bar-striped 
+                                    {% if result.percentage >= 80 %}bg-success
+                                    {% elif result.percentage >= 60 %}bg-info
+                                    {% elif result.percentage >= 40 %}bg-warning
+                                    {% else %}bg-danger{% endif %}" 
+                                    role="progressbar" 
+                                    style="width: {{ result.percentage }}%;" 
+                                    aria-valuenow="{{ result.percentage }}" 
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100">
+                                    {{ "%.1f"|format(result.percentage) }}%
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ result.completed_at[:19] }}</td>
+                        <td>
+                            {% if result.is_declared_winner == 1 %}
+                                <span class="badge bg-warning text-dark">🏆 Winner Declared</span>
+                            {% else %}
+                                <span class="badge bg-success">Ready to Declare</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if result.is_declared_winner == 0 %}
+                            <form method="POST" action="{{ url_for('declare_winner', result_id=result.id) }}" style="display: inline;">
+                                <select name="prize_rank" class="form-control form-control-sm" style="width: auto; display: inline-block; margin-bottom: 5px;">
+                                    <option value="Winner">🏆 Winner</option>
+                                    <option value="1st Prize">🥇 1st Prize</option>
+                                    <option value="2nd Prize">🥈 2nd Prize</option>
+                                    <option value="3rd Prize">🥉 3rd Prize</option>
+                                    <option value="Consolation">🎖️ Consolation</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Declare {{ result.student_name }} as winner?')">
+                                    Declare Winner
+                                </button>
+                            </form>
+                            {% else %}
+                            <button class="btn btn-sm btn-secondary" disabled>Already Winner</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            <h4 class="alert-heading">No Quiz Results Found!</h4>
+            <p>There are no quiz results in the database yet. Please ask students to take quizzes first.</p>
+            <hr>
+            <p class="mb-0">Once students complete quizzes, their results will appear here for you to declare winners.</p>
+        </div>
+        {% endif %}
+        
+        <div class="mt-3">
+            <a href="{{ url_for('view_winners') }}" class="btn btn-warning">🏆 View All Winners</a>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

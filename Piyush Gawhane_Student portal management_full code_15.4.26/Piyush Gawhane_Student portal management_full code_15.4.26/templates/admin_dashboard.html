@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h1 class="display-4">{{ total_students }}</h1>
+                <p class="lead">Total Students</p>
+                <a href="{{ url_for('add_student') }}" class="btn btn-primary">Add Student</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h1 class="display-4">{{ total_materials }}</h1>
+                <p class="lead">Study Materials</p>
+                <a href="{{ url_for('upload_material') }}" class="btn btn-primary">Upload Material</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h1 class="display-4">{{ total_quizzes }}</h1>
+                <p class="lead">Quiz Questions</p>
+                <a href="{{ url_for('manage_quizzes') }}" class="btn btn-primary">Manage Quizzes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>Quick Actions</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('add_student') }}" class="btn btn-outline-primary">➕ Add New Student</a>
+                    <a href="{{ url_for('upload_material') }}" class="btn btn-outline-primary">📤 Upload Study Material</a>
+                    <a href="{{ url_for('mark_attendance') }}" class="btn btn-outline-primary">📝 Mark Attendance</a>
+                    <a href="{{ url_for('enter_marks') }}" class="btn btn-outline-primary">📊 Enter Marks</a>
+                    <a href="{{ url_for('manage_quizzes') }}" class="btn btn-primary">Manage Quizzes</a>
+                    <a href="{{ url_for('manage_timetables') }}" class="btn btn-outline-primary">
+                    📅 Manage Exam Timetables
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mt-3">
+    <div class="card bg-warning">
+        <div class="card-header">
+            <h4>🏆 Quiz Winner Management</h4>
+        </div>
+        <div class="card-body">
+            <div class="d-grid gap-2">
+                <a href="{{ url_for('admin_quiz_results') }}" class="btn btn-dark btn-lg">
+                    🏆 Declare Quiz Winners 🏆
+                </a>
+                <a href="{{ url_for('view_winners') }}" class="btn btn-info">
+                    View All Winners
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>Recent Students</h4>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for student in recent_students %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ student.name }}</strong><br>
+                                <small>{{ student.roll_number }} - {{ student.course }} (Sem {{ student.semester }})</small>
+                            </div>
+                            <a href="{{ url_for('edit_student', student_id=student.id) }}" class="btn btn-sm btn-primary">Edit</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

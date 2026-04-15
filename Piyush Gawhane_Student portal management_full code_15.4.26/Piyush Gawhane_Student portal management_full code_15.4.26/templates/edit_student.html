@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Edit Student</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ student.name }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ student.email }}" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="course" class="form-label">Course</label>
+                            <select class="form-control" id="course" name="course" required>
+                                <option value="Computer Science" {% if student.course == 'Computer Science' %}selected{% endif %}>Computer Science</option>
+                                <option value="Information Technology" {% if student.course == 'Information Technology' %}selected{% endif %}>Information Technology</option>
+                                <option value="Electronics" {% if student.course == 'Electronics' %}selected{% endif %}>Electronics</option>
+                                <option value="Mechanical" {% if student.course == 'Mechanical' %}selected{% endif %}>Mechanical</option>
+                                <option value="Civil" {% if student.course == 'Civil' %}selected{% endif %}>Civil</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="semester" class="form-label">Semester</label>
+                            <select class="form-control" id="semester" name="semester" required>
+                                <option value="1" {% if student.semester == 1 %}selected{% endif %}>Semester 1</option>
+                                <option value="2" {% if student.semester == 2 %}selected{% endif %}>Semester 2</option>
+                                <option value="3" {% if student.semester == 3 %}selected{% endif %}>Semester 3</option>
+                                <option value="4" {% if student.semester == 4 %}selected{% endif %}>Semester 4</option>
+                                <option value="5" {% if student.semester == 5 %}selected{% endif %}>Semester 5</option>
+                                <option value="6" {% if student.semester == 6 %}selected{% endif %}>Semester 6</option>
+                                <option value="7" {% if student.semester == 7 %}selected{% endif %}>Semester 7</option>
+                                <option value="8" {% if student.semester == 8 %}selected{% endif %}>Semester 8</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Update Student</button>
+                        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary mt-2">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        background: url("https://i.pinimg.com/1200x/ca/12/b0/ca12b0952089ce2d23f91a8636e34342.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .overlay {
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 1100px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.0);
+    }
+
+    .card-header {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    table {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    td:nth-child(4) {
+        text-align: left; /* question column left aligned */
+    }
+
+    .btn {
+        border-radius: 8px;
+    }
+</style>
+
+<div class="overlay">
+    <div class="card">
+
+        <!-- Header -->
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Manage Quiz Questions</h3>
+            <a href="{{ url_for('add_quiz') }}" class="btn btn-light">+ Add New Question</a>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+
+            {% if quizzes %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Course</th>
+                            <th>Semester</th>
+                            <th>Question</th>
+                            <th>Correct Answer</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for quiz in quizzes %}
+                        <tr>
+                            <td>{{ quiz.id }}</td>
+                            <td>{{ quiz.course }}</td>
+                            <td>{{ quiz.semester }}</td>
+
+                            <td>
+                                {{ quiz.question[:50] }}
+                                {% if quiz.question|length > 50 %}...{% endif %}
+                            </td>
+
+                            <td>
+                                {% if quiz.correct_answer == 'A' %}
+                                    {{ quiz.option_a }}
+                                {% elif quiz.correct_answer == 'B' %}
+                                    {{ quiz.option_b }}
+                                {% elif quiz.correct_answer == 'C' %}
+                                    {{ quiz.option_c }}
+                                {% else %}
+                                    {{ quiz.option_d }}
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <a href="{{ url_for('edit_quiz', quiz_id=quiz.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="{{ url_for('delete_quiz', quiz_id=quiz.id) }}"
+                                   class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Are you sure you want to delete this question?')">
+                                   Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            {% else %}
+            <div class="alert alert-info text-center">
+                <h4>No Quiz Questions Found!</h4>
+                <p>Click "Add New Question" to start creating quizzes.</p>
+            </div>
+            {% endif %}
+
+            <!-- Footer -->
+            <div class="text-center mt-3">
+                <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary px-4">Back to Dashboard</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

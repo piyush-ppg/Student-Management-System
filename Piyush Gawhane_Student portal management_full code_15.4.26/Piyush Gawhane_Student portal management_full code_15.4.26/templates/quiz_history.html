@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        background: url("https://i.pinimg.com/1200x/ca/12/b0/ca12b0952089ce2d23f91a8636e34342.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .overlay {
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 1100px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.0);
+    }
+
+    .card-header {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    table {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .progress {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .btn {
+        border-radius: 8px;
+    }
+</style>
+
+<div class="overlay">
+    <div class="card">
+
+        <!-- Header -->
+        <div class="card-header bg-primary text-white text-center">
+            <h3 class="mb-0">My Quiz History</h3>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+
+            {% if history %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Score</th>
+                            <th>Percentage</th>
+                            <th>Status</th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for result in history %}
+                        <tr>
+                            <td>{{ result.completed_at }}</td>
+
+                            <td>{{ result.score }}/{{ result.total_questions }}</td>
+
+                            <td>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar 
+                                        {% if result.percentage >= 60 %}
+                                            bg-success
+                                        {% elif result.percentage >= 40 %}
+                                            bg-warning
+                                        {% else %}
+                                            bg-danger
+                                        {% endif %}"
+                                        style="width: {{ result.percentage }}%;">
+                                        {{ "%.1f"|format(result.percentage) }}%
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                {% if result.percentage >= 60 %}
+                                    <span class="badge bg-success">Passed</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Needs Improvement</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if result.is_winner %}
+                                    <span class="badge bg-warning text-dark">🏆 Winner!</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Not Declared</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            {% else %}
+            <div class="alert alert-info text-center">
+                <h4>No Quiz History Found!</h4>
+                <p>Take a quiz to start tracking your performance.</p>
+            </div>
+            {% endif %}
+
+            <!-- Buttons -->
+            <div class="text-center mt-3">
+                <a href="{{ url_for('take_quiz') }}" class="btn btn-primary me-2">Take New Quiz</a>
+                <a href="{{ url_for('student_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

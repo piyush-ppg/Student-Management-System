@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        background: url("https://i.pinimg.com/1200x/ca/12/b0/ca12b0952089ce2d23f91a8636e34342.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .overlay {
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 700px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.0);
+    }
+
+    .card-header {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+    }
+
+    .btn {
+        border-radius: 8px;
+    }
+</style>
+
+<div class="overlay">
+    <div class="card">
+
+        <!-- Header -->
+        <div class="card-header bg-primary text-white text-center">
+            <h3 class="mb-0">Upload Study Material</h3>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                <!-- Title -->
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                </div>
+
+                <!-- Course & Semester -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="course" class="form-label">Course</label>
+                        <select class="form-control" id="course" name="course" required>
+                            <option value="">Select Course</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Information Technology">Information Technology</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Civil">Civil</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="semester" class="form-label">Semester</label>
+                        <select class="form-control" id="semester" name="semester" required>
+                            <option value="">Select Semester</option>
+                            <option value="1">Semester 1</option>
+                            <option value="2">Semester 2</option>
+                            <option value="3">Semester 3</option>
+                            <option value="4">Semester 4</option>
+                            <option value="5">Semester 5</option>
+                            <option value="6">Semester 6</option>
+                            <option value="7">Semester 7</option>
+                            <option value="8">Semester 8</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- File Upload -->
+                <div class="mb-3">
+                    <label for="file" class="form-label">File (PDF, DOC, PPT, etc.)</label>
+                    <input type="file" class="form-control" id="file" name="file" required>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Upload Material</button>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary mt-2">Cancel</a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

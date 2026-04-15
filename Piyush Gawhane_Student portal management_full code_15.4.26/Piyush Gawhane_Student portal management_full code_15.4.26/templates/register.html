@@ -1,0 +1,345 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Full window background */
+    body {
+        background-image: url("https://i.pinimg.com/1200x/ca/12/b0/ca12b0952089ce2d23f91a8636e34342.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+    
+    /* Registration container */
+    .registration-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        background-color: rgba(0, 0, 0, 0.0); /* Dark overlay for better readability */
+    }
+    
+    /* Registration Card */
+    .registration-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(5px);
+        border: none;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    .registration-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Card Header */
+    .registration-card .card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 30px 20px;
+        text-align: center;
+    }
+    
+    .registration-card .card-header h3 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.8rem;
+    }
+    
+    .registration-card .card-header p {
+        margin: 10px 0 0 0;
+        opacity: 0.9;
+        font-size: 0.95rem;
+    }
+    
+    /* Card Body */
+    .registration-card .card-body {
+        padding: 30px;
+    }
+    
+    /* Form Labels */
+    .form-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+    }
+    
+    /* Form Controls */
+    .form-control {
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 10px 15px;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        outline: none;
+    }
+    
+    /* Select dropdown */
+    select.form-control {
+        cursor: pointer;
+        appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+    }
+    
+    /* Register Button */
+    .btn-register {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        color: white;
+        width: 100%;
+    }
+    
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%);
+    }
+    
+    /* Login Link */
+    .btn-login-link {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-block;
+        margin-top: 15px;
+    }
+    
+    .btn-login-link:hover {
+        color: #764ba2;
+        text-decoration: underline;
+        transform: translateX(5px);
+    }
+    
+    /* Text muted */
+    .text-muted {
+        color: #6c757d;
+        font-size: 0.8rem;
+        margin-top: 5px;
+        display: block;
+    }
+    
+    /* Required field indicator */
+    .form-label:after {
+        content: " *";
+        color: #dc3545;
+        font-weight: bold;
+    }
+    
+    /* Error styling (if any) */
+    .is-invalid {
+        border-color: #dc3545;
+    }
+    
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.8rem;
+        margin-top: 5px;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .registration-container {
+            padding: 20px 15px;
+            align-items: flex-start;
+        }
+        
+        .registration-card .card-header h3 {
+            font-size: 1.5rem;
+        }
+        
+        .registration-card .card-body {
+            padding: 20px;
+        }
+        
+        .form-control {
+            font-size: 14px;
+        }
+    }
+    
+    /* Animation for form fields */
+    .form-control, .btn-register {
+        animation: fadeIn 0.5s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+    /* Smooth transition for form groups */
+    .mb-3 {
+        animation: slideIn 0.4s ease-out;
+        animation-fill-mode: both;
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    /* Staggered animation for form fields */
+    .mb-3:nth-child(1) { animation-delay: 0.1s; }
+    .mb-3:nth-child(2) { animation-delay: 0.2s; }
+    .mb-3:nth-child(3) { animation-delay: 0.3s; }
+    .mb-3:nth-child(4) { animation-delay: 0.4s; }
+    .mb-3:nth-child(5) { animation-delay: 0.5s; }
+    .mb-3:nth-child(6) { animation-delay: 0.6s; }
+</style>
+
+<div class="registration-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-7 col-xl-6">
+                <div class="card registration-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-user-plus"></i> Student Registration</h3>
+                        <p>Create your account to get started</p>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" id="registrationForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="roll_number" class="form-label">Roll Number</label>
+                                    <input type="text" class="form-control" id="roll_number" name="roll_number" required>
+                                    <small class="text-muted"><i class="fas fa-info-circle"></i> This will be your username</small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="course" class="form-label">Course</label>
+                                    <select class="form-control" id="course" name="course" required>
+                                        <option value="">Select Course</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Mechanical">Mechanical</option>
+                                        <option value="Civil">Civil</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="semester" class="form-label">Semester</label>
+                                    <select class="form-control" id="semester" name="semester" required>
+                                        <option value="">Select Semester</option>
+                                        <option value="1">Semester 1</option>
+                                        <option value="2">Semester 2</option>
+                                        <option value="3">Semester 3</option>
+                                        <option value="4">Semester 4</option>
+                                        <option value="5">Semester 5</option>
+                                        <option value="6">Semester 6</option>
+                                        <option value="7">Semester 7</option>
+                                        <option value="8">Semester 8</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirm_password" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                <small class="text-muted" id="passwordMatchMessage"></small>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-register">
+                                    <i class="fas fa-check-circle"></i> Register
+                                </button>
+                                <div class="text-center">
+                                    <a href="{{ url_for('login') }}" class="btn-login-link">
+                                        <i class="fas fa-sign-in-alt"></i> Already have an account? Login
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Password match validation
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm_password');
+    const message = document.getElementById('passwordMatchMessage');
+    
+    function validatePassword() {
+        if (password.value !== confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords don't match");
+            message.innerHTML = '<i class="fas fa-exclamation-circle"></i> Passwords do not match';
+            message.style.color = '#dc3545';
+            return false;
+        } else {
+            confirmPassword.setCustomValidity('');
+            message.innerHTML = '<i class="fas fa-check-circle"></i> Passwords match';
+            message.style.color = '#28a745';
+            return true;
+        }
+    }
+    
+    password.addEventListener('change', validatePassword);
+    confirmPassword.addEventListener('keyup', validatePassword);
+    
+    // Form submission validation
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        if (!validatePassword()) {
+            e.preventDefault();
+            alert('Please make sure your passwords match.');
+        }
+    });
+</script>
+{% endblock %}

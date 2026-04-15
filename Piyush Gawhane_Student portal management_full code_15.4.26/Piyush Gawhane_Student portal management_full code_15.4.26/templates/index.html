@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        background: url("https://i.pinimg.com/1200x/ca/12/b0/ca12b0952089ce2d23f91a8636e34342.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .overlay {
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .main-card {
+        width: 100%;
+        max-width: 900px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .inner-card {
+        border-radius: 15px;
+        transition: 0.3s;
+    }
+
+    .inner-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn {
+        border-radius: 8px;
+    }
+</style>
+
+<div class="overlay">
+    <div class="main-card card text-center">
+
+        <div class="card-body">
+
+            <!-- Title -->
+            <h1 class="display-4 mb-3 text-primary">Welcome to Student Management Portal</h1>
+            <p class="lead text-light">A comprehensive platform for managing academic activities</p>
+
+            <hr class="my-4 bg-light">
+
+            <!-- Role Cards -->
+            <div class="row mt-4">
+
+                <!-- Admin -->
+                <div class="col-md-6 mb-3">
+                    <div class="card inner-card p-3">
+                        <h3>👨‍💼 Admin</h3>
+                        <p>Manage students, upload materials, track attendance..</p>
+                        <a href="{{ url_for('login') }}" class="btn btn-primary">Admin Login</a>
+                    </div>
+                </div>
+
+                <!-- Student -->
+                <div class="col-md-6 mb-3">
+                    <div class="card inner-card p-3">
+                        <h3>👨‍🎓 Student</h3>
+                        <p>Access study materials, view timetable, take quizzes</p>
+                        <a href="{{ url_for('login') }}" class="btn btn-success">Student Login</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

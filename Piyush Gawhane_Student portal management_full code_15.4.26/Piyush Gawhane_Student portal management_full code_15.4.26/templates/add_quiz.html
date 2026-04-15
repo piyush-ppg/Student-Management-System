@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Add Quiz Question</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="course" class="form-label">Course *</label>
+                            <select class="form-control" id="course" name="course" required>
+                                <option value="">Select Course</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Information Technology">Information Technology</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Mechanical">Mechanical</option>
+                                <option value="Civil">Civil</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="semester" class="form-label">Semester *</label>
+                            <select class="form-control" id="semester" name="semester" required>
+                                <option value="">Select Semester</option>
+                                <option value="1">Semester 1</option>
+                                <option value="2">Semester 2</option>
+                                <option value="3">Semester 3</option>
+                                <option value="4">Semester 4</option>
+                                <option value="5">Semester 5</option>
+                                <option value="6">Semester 6</option>
+                                <option value="7">Semester 7</option>
+                                <option value="8">Semester 8</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="question" class="form-label">Question *</label>
+                        <textarea class="form-control" id="question" name="question" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="option_a" class="form-label">Option A *</label>
+                        <input type="text" class="form-control" id="option_a" name="option_a" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="option_b" class="form-label">Option B *</label>
+                        <input type="text" class="form-control" id="option_b" name="option_b" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="option_c" class="form-label">Option C *</label>
+                        <input type="text" class="form-control" id="option_c" name="option_c" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="option_d" class="form-label">Option D *</label>
+                        <input type="text" class="form-control" id="option_d" name="option_d" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="correct_answer" class="form-label">Correct Answer *</label>
+                        <select class="form-control" id="correct_answer" name="correct_answer" required>
+                            <option value="">Select Correct Answer</option>
+                            <option value="A">Option A</option>
+                            <option value="B">Option B</option>
+                            <option value="C">Option C</option>
+                            <option value="D">Option D</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Add Question</button>
+                        <a href="{{ url_for('manage_quizzes') }}" class="btn btn-secondary mt-2">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

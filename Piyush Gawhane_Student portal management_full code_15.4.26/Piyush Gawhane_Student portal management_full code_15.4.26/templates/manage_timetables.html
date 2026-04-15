@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        background: url("https://i.pinimg.com/1200x/ca/12/b0/ca12b0952089ce2d23f91a8636e34342.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .overlay {
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 1100px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.0);
+    }
+
+    .card-header {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    table {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .btn {
+        border-radius: 8px;
+    }
+</style>
+
+<div class="overlay">
+    <div class="card">
+
+        <!-- Header -->
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Manage Exam Timetables</h3>
+            <a href="{{ url_for('add_timetable') }}" class="btn btn-light">+ Add New Exam Entry</a>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+
+            {% if timetables %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Course</th>
+                            <th>Semester</th>
+                            <th>Subject</th>
+                            <th>Exam Date</th>
+                            <th>Time</th>
+                            <th>Venue</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for timetable in timetables %}
+                        <tr>
+                            <td>{{ timetable.id }}</td>
+                            <td>{{ timetable.course }}</td>
+                            <td>{{ timetable.semester }}</td>
+                            <td>{{ timetable.subject }}</td>
+                            <td>{{ timetable.exam_date }}</td>
+                            <td>{{ timetable.exam_time }}</td>
+                            <td>{{ timetable.venue }}</td>
+                            <td>
+                                <a href="{{ url_for('edit_timetable', timetable_id=timetable.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="{{ url_for('delete_timetable', timetable_id=timetable.id) }}"
+                                   class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Are you sure you want to delete this exam entry?')">
+                                   Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            {% else %}
+            <div class="alert alert-info text-center">
+                <h4>No Exam Timetables Found!</h4>
+                <p>Click the "Add New Exam Entry" button to create exam schedules.</p>
+            </div>
+            {% endif %}
+
+            <!-- Footer Button -->
+            <div class="text-center mt-3">
+                <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary px-4">Back to Dashboard</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

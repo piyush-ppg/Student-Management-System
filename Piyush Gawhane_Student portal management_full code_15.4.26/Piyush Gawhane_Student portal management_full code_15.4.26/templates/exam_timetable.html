@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        background: url("https://images.unsplash.com/photo-1506784983877-45594efa4cbe") no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .overlay {
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.0);
+        padding: 30px 15px;
+    }
+
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.0);
+    }
+
+    .table {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .list-group-item {
+        border-radius: 10px;
+        margin-bottom: 5px;
+    }
+
+    .btn {
+        border-radius: 8px;
+    }
+</style>
+
+<div class="overlay">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <div class="card">
+
+                    <!-- Header -->
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3>Exam Timetable</h3>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="card-body">
+
+                        <!-- Course Info -->
+                        <div class="alert alert-info text-center">
+                            <strong>Course:</strong> {{ student.course }} |
+                            <strong>Semester:</strong> {{ student.semester }}
+                        </div>
+
+                        {% if timetable %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Exam Date</th>
+                                        <th>Time</th>
+                                        <th>Venue</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for exam in timetable %}
+                                    <tr>
+                                        <td><strong>{{ exam.subject }}</strong></td>
+                                        <td>{{ exam.exam_date }}</td>
+                                        <td>{{ exam.exam_time }}</td>
+                                        <td>{{ exam.venue }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        {% else %}
+                        <div class="alert alert-warning text-center">
+                            <h4>No Exam Timetable Available!</h4>
+                            <p>
+                                No timetable for {{ student.course }} (Sem {{ student.semester }}).
+                            </p>
+                            <hr>
+                            <p class="mb-0">Please contact your administrator.</p>
+                        </div>
+
+                        {% if all_timetables %}
+                        <div class="mt-4">
+                            <h5 class="text-white">Available Timetables for Other Courses:</h5>
+
+                            <div class="list-group">
+                                {% for tt in all_timetables %}
+                                <div class="list-group-item">
+                                    <strong>{{ tt.course }}</strong> - Semester {{ tt.semester }}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+
+                        <!-- Button -->
+                        <div class="text-center mt-3">
+                            <a href="{{ url_for('student_dashboard') }}" class="btn btn-secondary px-4">
+                                Back to Dashboard
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        background: url("https://i.pinimg.com/1200x/ca/12/b0/ca12b0952089ce2d23f91a8636e34342.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .overlay {
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.0);
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    .progress {
+        height: 30px;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        font-weight: bold;
+        font-size: 16px;
+    }
+</style>
+
+<div class="overlay">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+
+                <div class="card">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3 class="mb-0">Quiz Results</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- Result Message -->
+                        <div class="text-center mb-4">
+                            {% if result.percentage >= 80 %}
+                                <div class="display-1 text-success">🏆</div>
+                                <h2 class="text-success">Excellent!</h2>
+
+                            {% elif result.percentage >= 60 %}
+                                <div class="display-1 text-info">📚</div>
+                                <h2 class="text-info">Good Job!</h2>
+
+                            {% elif result.percentage >= 40 %}
+                                <div class="display-1 text-warning">📖</div>
+                                <h2 class="text-warning">Keep Learning!</h2>
+
+                            {% else %}
+                                <div class="display-1 text-danger">💪</div>
+                                <h2 class="text-danger">Need Improvement</h2>
+                            {% endif %}
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="row text-center mb-4">
+                            <div class="col-md-4 mb-2">
+                                <div class="card p-3">
+                                    <h5>Your Score</h5>
+                                    <h2 class="text-primary">{{ result.score }}/{{ result.total_questions }}</h2>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <div class="card p-3">
+                                    <h5>Percentage</h5>
+                                    <h2 class="text-success">{{ "%.1f"|format(result.percentage) }}%</h2>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <div class="card p-3">
+                                    <h5>Completed On</h5>
+                                    <h6>{{ result.completed_at }}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="progress mb-4">
+                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                                 style="width: {{ result.percentage }}%;">
+                                {{ "%.1f"|format(result.percentage) }}%
+                            </div>
+                        </div>
+
+                        <!-- Info -->
+                        <div class="alert alert-info text-center">
+                            <strong>Note:</strong> Your result has been recorded. Check the leaderboard!
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-grid gap-2">
+                            <a href="{{ url_for('quiz_history') }}" class="btn btn-info">View Quiz History</a>
+                            <a href="{{ url_for('leaderboard') }}" class="btn btn-primary">View Leaderboard</a>
+                            <a href="{{ url_for('student_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Edit Quiz Question</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="course" class="form-label">Course *</label>
+                            <select class="form-control" id="course" name="course" required>
+                                <option value="Computer Science" {% if quiz.course == 'Computer Science' %}selected{% endif %}>Computer Science</option>
+                                <option value="Information Technology" {% if quiz.course == 'Information Technology' %}selected{% endif %}>Information Technology</option>
+                                <option value="Electronics" {% if quiz.course == 'Electronics' %}selected{% endif %}>Electronics</option>
+                                <option value="Mechanical" {% if quiz.course == 'Mechanical' %}selected{% endif %}>Mechanical</option>
+                                <option value="Civil" {% if quiz.course == 'Civil' %}selected{% endif %}>Civil</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="semester" class="form-label">Semester *</label>
+                            <select class="form-control" id="semester" name="semester" required>
+                                <option value="1" {% if quiz.semester == 1 %}selected{% endif %}>Semester 1</option>
+                                <option value="2" {% if quiz.semester == 2 %}selected{% endif %}>Semester 2</option>
+                                <option value="3" {% if quiz.semester == 3 %}selected{% endif %}>Semester 3</option>
+                                <option value="4" {% if quiz.semester == 4 %}selected{% endif %}>Semester 4</option>
+                                <option value="5" {% if quiz.semester == 5 %}selected{% endif %}>Semester 5</option>
+                                <option value="6" {% if quiz.semester == 6 %}selected{% endif %}>Semester 6</option>
+                                <option value="7" {% if quiz.semester == 7 %}selected{% endif %}>Semester 7</option>
+                                <option value="8" {% if quiz.semester == 8 %}selected{% endif %}>Semester 8</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="question" class="form-label">Question *</label>
+                        <textarea class="form-control" id="question" name="question" rows="3" required>{{ quiz.question }}</textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="option_a" class="form-label">Option A *</label>
+                        <input type="text" class="form-control" id="option_a" name="option_a" value="{{ quiz.option_a }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="option_b" class="form-label">Option B *</label>
+                        <input type="text" class="form-control" id="option_b" name="option_b" value="{{ quiz.option_b }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="option_c" class="form-label">Option C *</label>
+                        <input type="text" class="form-control" id="option_c" name="option_c" value="{{ quiz.option_c }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="option_d" class="form-label">Option D *</label>
+                        <input type="text" class="form-control" id="option_d" name="option_d" value="{{ quiz.option_d }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="correct_answer" class="form-label">Correct Answer *</label>
+                        <select class="form-control" id="correct_answer" name="correct_answer" required>
+                            <option value="A" {% if quiz.correct_answer == 'A' %}selected{% endif %}>Option A</option>
+                            <option value="B" {% if quiz.correct_answer == 'B' %}selected{% endif %}>Option B</option>
+                            <option value="C" {% if quiz.correct_answer == 'C' %}selected{% endif %}>Option C</option>
+                            <option value="D" {% if quiz.correct_answer == 'D' %}selected{% endif %}>Option D</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Update Question</button>
+                        <a href="{{ url_for('manage_quizzes') }}" class="btn btn-secondary mt-2">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

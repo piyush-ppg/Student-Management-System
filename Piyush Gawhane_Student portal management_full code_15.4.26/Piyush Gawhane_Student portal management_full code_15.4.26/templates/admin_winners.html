@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-warning">
+        <h3 class="text-center">🏆 Quiz Winners 🏆</h3>
+    </div>
+    <div class="card-body">
+        {% if winners %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Rank</th>
+                        <th>Student Name</th>
+                        <th>Roll Number</th>
+                        <th>Course</th>
+                        <th>Semester</th>
+                        <th>Score</th>
+                        <th>Percentage</th>
+                        <th>Declared On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for winner in winners %}
+                    <tr>
+                        <td>
+                            {% if winner.prize_rank == '1st Prize' %}
+                                🥇
+                            elif winner.prize_rank == '2nd Prize' %}
+                                🥈
+                            elif winner.prize_rank == '3rd Prize' %}
+                                🥉
+                            else %}
+                                🏆
+                            {% endif %}
+                            {{ winner.prize_rank }}
+                        </td>
+                        <td>{{ winner.student_name }}</td>
+                        <td>{{ winner.roll_number }}</td>
+                        <td>{{ winner.course }}</td>
+                        <td>{{ winner.semester }}</td>
+                        <td>{{ winner.score }}/{{ winner.total_questions }}</td>
+                        <td>
+                            <span class="badge bg-success">{{ "%.1f"|format(winner.percentage) }}%</span>
+                        </td>
+                        <td>{{ winner.declared_on }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            No winners declared yet. Admin can declare winners from Quiz Results section.
+        </div>
+        {% endif %}
+        <div class="mt-3">
+            <a href="{{ url_for('admin_quiz_results') }}" class="btn btn-primary">View All Results</a>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

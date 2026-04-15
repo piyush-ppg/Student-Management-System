@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        background: url("https://i.pinimg.com/1200x/ca/12/b0/ca12b0952089ce2d23f91a8636e34342.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .overlay {
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.0);
+        padding: 30px 15px;
+    }
+
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.0);
+    }
+
+    .table {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .list-group-item {
+        border-radius: 10px;
+        margin-bottom: 8px;
+    }
+
+    .btn {
+        border-radius: 8px;
+    }
+</style>
+
+<div class="overlay">
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <!-- Leaderboard -->
+            <div class="col-lg-8 mb-3">
+                <div class="card">
+
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3>🏆 Top Performers Leaderboard 🏆</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        {% if top_performers %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Student Name</th>
+                                        <th>Roll Number</th>
+                                        <th>Course</th>
+                                        <th>Best Score</th>
+                                        <th>Avg Score</th>
+                                        <th>Quizzes Taken</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for performer in top_performers %}
+                                    <tr>
+                                        <td>
+                                            {% if loop.index == 1 %}
+                                                🥇 1st
+                                            {% elif loop.index == 2 %}
+                                                🥈 2nd
+                                            {% elif loop.index == 3 %}
+                                                🥉 3rd
+                                            {% else %}
+                                                {{ loop.index }}th
+                                            {% endif %}
+                                        </td>
+
+                                        <td><strong>{{ performer.student_name }}</strong></td>
+                                        <td>{{ performer.roll_number }}</td>
+                                        <td>{{ performer.course }} (Sem {{ performer.semester }})</td>
+
+                                        <td>
+                                            <span class="badge bg-success">
+                                                {{ "%.1f"|format(performer.best_percentage) }}%
+                                            </span>
+                                        </td>
+
+                                        <td>{{ "%.1f"|format(performer.avg_percentage) }}%</td>
+                                        <td>{{ performer.quizzes_taken }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        {% else %}
+                        <div class="alert alert-info text-center">
+                            No quiz results available yet. Take quizzes to appear on leaderboard!
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+
+                <!-- Winners -->
+                <div class="card mb-3">
+                    <div class="card-header bg-warning text-center">
+                        <h4>🏆 Recent Winners 🏆</h4>
+                    </div>
+
+                    <div class="card-body">
+                        {% if winners %}
+                        <div class="list-group">
+                            {% for winner in winners %}
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between">
+
+                                    <div>
+                                        <strong>{{ winner.student_name }}</strong><br>
+                                        <small>{{ winner.roll_number }}</small><br>
+                                        <small>{{ winner.course }} - Sem {{ winner.semester }}</small>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <span class="badge bg-success">
+                                            {{ "%.1f"|format(winner.percentage) }}%
+                                        </span><br>
+                                        <small class="text-muted">{{ winner.prize_rank }}</small>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        {% else %}
+                        <div class="alert alert-info text-center">
+                            No winners declared yet.
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-header bg-info text-white text-center">
+                        <h4>Quick Actions</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{{ url_for('take_quiz') }}" class="btn btn-primary">Take New Quiz</a>
+                            <a href="{{ url_for('quiz_history') }}" class="btn btn-info">View My History</a>
+                            <a href="{{ url_for('student_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
